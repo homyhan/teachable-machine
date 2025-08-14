@@ -10,6 +10,8 @@ let btnApply = document.getElementById("btnApply");
 let urlModel ="";
 let className1, className2, className3, classNameTest = ""
 let nguong = 0;
+let currentVideo = null;
+
 
 const domID = (id)=>{
   return document.getElementById(id);
@@ -57,6 +59,25 @@ btnApply.addEventListener("click", function () {
    
   
 })
+
+function playVideo(file) {
+  // Nếu đang phát video khác thì dừng lại
+  if (currentVideo) {
+    currentVideo.pause();
+    currentVideo.currentTime = 0;
+    currentVideo.remove(); // xóa video cũ khỏi DOM
+  }
+
+  // Tạo thẻ video mới
+  currentVideo = document.createElement("video");
+  currentVideo.src = file;
+  currentVideo.controls = true; // có nút điều khiển
+  currentVideo.autoplay = true;
+  currentVideo.style.maxWidth = "300px";
+
+  // Thêm video vào vùng hiển thị (ví dụ trong #history hoặc một div riêng)
+  document.getElementById("history").appendChild(currentVideo);
+}
 async function startPrediction() {
   await initModel();
   document.body.style.backgroundColor = "white";
@@ -137,18 +158,32 @@ async function predict(attemptNumber) {
         `;
   historyEl.appendChild(resultItem);
 
+  // if (highestProb > 0.8) {
+  //   if (highestClass === "1") {
+  //     document.body.style.backgroundColor = "red";
+  //     playSound("happy.mp3");
+  //   } else if (highestClass === "2") {
+  //     document.body.style.backgroundColor = "blue";
+  //     playSound("sad.mp3");
+  //   } else if (highestClass === "3") {
+  //     document.body.style.backgroundColor = "yellow";
+  //     playSound("surprise.mp3");
+  //   }
+  // }
+
   if (highestProb > 0.8) {
-    if (highestClass === "1") {
-      document.body.style.backgroundColor = "red";
-      playSound("happy.mp3");
-    } else if (highestClass === "2") {
-      document.body.style.backgroundColor = "blue";
-      playSound("sad.mp3");
-    } else if (highestClass === "3") {
-      document.body.style.backgroundColor = "yellow";
-      playSound("surprise.mp3");
-    }
+  if (highestClass === "1") {
+    document.body.style.backgroundColor = "red";
+    // playVideo("video1.mp4");
+  } else if (highestClass === "2") {
+    document.body.style.backgroundColor = "blue";
+    // playVideo("video2.mp4");
+  } else if (highestClass === "3") {
+    document.body.style.backgroundColor = "yellow";
+    playVideo("meme10diem.mp4");
   }
+}
+
 }
 
 function playSound(file) {
