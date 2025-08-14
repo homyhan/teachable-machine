@@ -6,6 +6,10 @@ let countdownValue = 5,
   progressInterval;
 let attemptCount = 0;
 let currentAudio = null;
+let btnApply = document.getElementById("btnApply");
+let urlModel ="";
+let className1, className2, className3, classNameTest = ""
+let nguong = 0;
 
 async function initModel() {
   if (!model) {
@@ -25,7 +29,24 @@ async function initModel() {
     }
   }
 }
-
+btnApply.addEventListener("click", function () {
+   urlModel = document.getElementById("inputURLModel").value;
+   className1 = document.getElementById("className1").value
+   className2 = document.getElementById("className2").value
+   className3 = document.getElementById("className3").value
+   classNameTest = document.getElementById("classNameTest").value
+   nguong = document.getElementById("nguong").value*1
+    
+   console.log(urlModel);
+   console.log(className1);
+   console.log(className2);
+   console.log(className3);
+   console.log(classNameTest);
+   console.log(nguong);
+   
+   
+  
+})
 async function startPrediction() {
   await initModel();
   document.body.style.backgroundColor = "white";
@@ -71,6 +92,7 @@ async function updateProgressBars() {
     prediction[1].probability * 100 + "%";
   document.getElementById("bar3").style.width =
     prediction[2].probability * 100 + "%";
+  
 }
 
 async function predict(attemptNumber) {

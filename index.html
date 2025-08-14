@@ -18,13 +18,14 @@
             >
             <input
               type="text"
+              id="inputURLModel"
               placeholder="https://teachablemachine.withgoogle.com/models/XXXXXX/"
             />
           </div>
           <div class="hr"></div>
           <div class="nguong item">
             <label for=""> Ngưỡng tự tin (0–1):</label>
-            <input type="number" />
+            <input type="number" id="nguong"/>
           </div>
           <div class="hr"></div>
           <div class="classAndSound item">
@@ -35,7 +36,7 @@
             <div class="row">
               <div class="className">
                 <label for="">Lớp 1</label>
-                <input type="text" />
+                <input type="text" id="className1" placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"/>
               </div>
               <div class="sound">
                 <input type="file" name="" id="" />
@@ -44,7 +45,7 @@
             <div class="row">
               <div class="className">
                 <label for="">Lớp 2</label>
-                <input type="text" />
+                <input type="text" id="className2" placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"/>
               </div>
               <div class="sound">
                 <input type="file" name="" id="" />
@@ -53,7 +54,7 @@
             <div class="row">
               <div class="className">
                 <label for="">Lớp 3</label>
-                <input type="text" />
+                <input type="text" id="className3" placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"/>
               </div>
               <div class="sound">
                 <input type="file" name="" id="" />
@@ -62,48 +63,19 @@
             <div class="row">
               <div class="className">
                 <label for="">Lớp test</label>
-                <input type="text" />
+                <input type="text" id="classNameTest" placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"/>
               </div>
               <div class="sound">
                 <input type="file" name="" id="" />
               </div>
             </div>
-            <!-- <div class="className">
-              <div class="item">
-                <label for="">Lớp 1</label>
-                <input type="text" />
-              </div>
-              <div class="item">
-                <label for="">Lớp 2</label>
-                <input type="text" />
-              </div>
-              <div class="item">
-                <label for="">Lớp 3</label>
-                <input type="text" />
-              </div>
-              <div class="item">
-                <label for="">Lớp test</label>
-                <input type="text" />
-              </div>
-            </div>
-            <div class="sound">
-              <p>Âm thanh</p>
-              <div class="item">
-                <input type="file" name="" id="" />
-              </div>
-              <div class="item">
-                <input type="file" name="" id="" />
-              </div>
-              <div class="item">
-                <input type="file" name="" id="" />
-              </div>
-              <div class="item">
-                <input type="file" name="" id="" />
-              </div>
-            </div> -->
+            
           </div>
           <br />
-          <button class="btnStart" onclick="startPrediction()">Start</button>
+          <div class="actionBtn">
+            <button class="btn btnApply" id="btnApply">Apply</button>
+            <button class="btn btnStart" onclick="startPrediction()">Start</button>
+          </div>
         </div>
         <div class="right item">
           <div class="top">
