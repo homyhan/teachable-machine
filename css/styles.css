@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+body{
+    background: radial-gradient(1200px 800px at 10% -10%, #1b2550, #0b1020 40%);
+}
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.container > h2{
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin: 30px 0px;
+}
+.container .main{
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+.container .main > .item{
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    padding: 20px;
+    border: 1px solid rgba(124,242,212,0.15);
+    border-radius: 10px;
+    color: #8ea0ff;
+}
+.container .main .left input{
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+.container .main .left input:focus{
+    outline: none;
+}
+.container .main .left .item{
+    margin-bottom: 12px;
+}
+.container .main .left .classAndSound{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10;
+}
+.container .main .left .btnStart{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #142055;
+    color: #e8ecff;
+    border: 1px solid #2a3a7c;
+}
+
+.container .main .right .hr{
+ background: linear-gradient(90deg, #142055, #2a3a7c33, #142055);
+ height: 1px;
+ margin: 6px 0px;
+}
+.progress {
+  height: 20px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+.red {
+  background: red;
+}
+.blue {
+  background: blue;
+}
+.orange {
+  background: orange;
+}
+.history{
+    overflow-y: scroll;
+}
+.history-item {
+  border: 1px solid #ccc;
+  padding: 6px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.history-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 1px solid #aaa;
+}
+
+.container .footer{
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
