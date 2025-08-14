@@ -53,9 +53,9 @@ body{
     margin-bottom: 12px;
 }
 .container .main .left .classAndSound{
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10;
+    gap: 10; */
 }
 .container .main .left .btnStart{
     display: block;
@@ -68,7 +68,7 @@ body{
     border: 1px solid #2a3a7c;
 }
 
-.container .main .right .hr{
+.hr{
  background: linear-gradient(90deg, #142055, #2a3a7c33, #142055);
  height: 1px;
  margin: 6px 0px;
@@ -89,6 +89,10 @@ body{
 }
 .history{
     overflow-y: scroll;
+    height: 300px;
+}
+.history h4{
+    position: fixed;
 }
 .history-item {
   border: 1px solid #ccc;
@@ -109,4 +113,18 @@ body{
     color: white;
     text-align: center;
     margin-bottom: 20px;
+}
+
+.container .main .cameraAndOutput{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10;
+}
+.container .main .left .row{
+    /* display: block; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5;
+    align-items: center;
+   margin: 10px 0px;
 }
