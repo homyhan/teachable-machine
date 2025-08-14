@@ -78,6 +78,7 @@ body{
   height: 20px;
   width: 0%;
   transition: width 0.3s ease;
+  border-radius: 5px;
 }
 .red {
   background: red;
