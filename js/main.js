@@ -60,23 +60,64 @@ btnApply.addEventListener("click", function () {
   
 })
 
-function playVideo(file) {
-  // Nếu đang phát video khác thì dừng lại
+// function playVideo(file) {
+//   // Nếu đang phát video khác thì dừng lại
+//   if (currentVideo) {
+//     currentVideo.pause();
+//     currentVideo.currentTime = 0;
+//     currentVideo.remove(); // xóa video cũ khỏi DOM
+//   }
+
+//   // Tạo thẻ video mới
+//   currentVideo = document.createElement("video");
+//   currentVideo.src = file;
+//   currentVideo.controls = true; // có nút điều khiển
+//   currentVideo.autoplay = true;
+//   currentVideo.style.maxWidth = "300px";
+
+//   // Thêm video vào vùng hiển thị (ví dụ trong #history hoặc một div riêng)
+//   document.getElementById("history").appendChild(currentVideo);
+// }
+
+function playVideoFullscreen(file) {
+  // Nếu đang phát video thì dừng
   if (currentVideo) {
     currentVideo.pause();
-    currentVideo.currentTime = 0;
-    currentVideo.remove(); // xóa video cũ khỏi DOM
+    currentVideo.remove();
   }
 
-  // Tạo thẻ video mới
+  // Tạo thẻ video
   currentVideo = document.createElement("video");
   currentVideo.src = file;
-  currentVideo.controls = true; // có nút điều khiển
   currentVideo.autoplay = true;
-  currentVideo.style.maxWidth = "300px";
+  currentVideo.style.display = "block";
+  currentVideo.style.position = "fixed";
+  currentVideo.style.top = "0";
+  currentVideo.style.left = "0";
+  currentVideo.style.width = "100%";
+  currentVideo.style.height = "100%";
+  currentVideo.style.zIndex = "9999";
+  currentVideo.style.objectFit = "cover";
 
-  // Thêm video vào vùng hiển thị (ví dụ trong #history hoặc một div riêng)
-  document.getElementById("history").appendChild(currentVideo);
+  document.body.appendChild(currentVideo);
+
+  // Phát toàn màn hình
+  if (currentVideo.requestFullscreen) {
+    currentVideo.requestFullscreen();
+  } else if (currentVideo.webkitRequestFullscreen) { // Safari
+    currentVideo.webkitRequestFullscreen();
+  } else if (currentVideo.msRequestFullscreen) { // IE/Edge
+    currentVideo.msRequestFullscreen();
+  }
+
+  // Khi video chạy xong thì thoát fullscreen và xóa video
+  currentVideo.onended = function () {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+    currentVideo.remove();
+    currentVideo = null;
+  };
 }
 async function startPrediction() {
   await initModel();
@@ -180,7 +221,7 @@ async function predict(attemptNumber) {
     // playVideo("video2.mp4");
   } else if (highestClass === "3") {
     document.body.style.backgroundColor = "yellow";
-    playVideo("meme10diem.mp4");
+    playVideoFullscreen("meme10diem.mp4");
   }
 }
 
