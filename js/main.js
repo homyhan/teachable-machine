@@ -11,6 +11,10 @@ let urlModel ="";
 let className1, className2, className3, classNameTest = ""
 let nguong = 0;
 
+const domID = (id)=>{
+  return document.getElementById(id);
+}
+
 async function initModel() {
   if (!model) {
     const modelURL = URL + "model.json";
@@ -35,7 +39,13 @@ btnApply.addEventListener("click", function () {
    className2 = document.getElementById("className2").value
    className3 = document.getElementById("className3").value
    classNameTest = document.getElementById("classNameTest").value
-   nguong = document.getElementById("nguong").value*1
+   nguong = document.getElementById("nguong").value*1;
+
+
+   domID("labelClass1").innerHTML = className1
+   domID("labelClass2").innerHTML = className2
+   domID("labelClass3").innerHTML = className3
+   domID("labelClassTest").innerHTML = classNameTest
     
    console.log(urlModel);
    console.log(className1);
