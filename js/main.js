@@ -1,5 +1,6 @@
 // const URL = "https://teachablemachine.withgoogle.com/models/rdcqB69I8/";
-const URL = "https://teachablemachine.withgoogle.com/models/Rn6MVZ6kF/"; // tay 207
+// const MODEL_URL = "https://teachablemachine.withgoogle.com/models/Rn6MVZ6kF/"; // tay 207
+let MODEL_URL = ""
 let model, webcam, labelContainer, maxPredictions;
 let countdownValue = 5,
   countdownInterval,
@@ -7,20 +8,25 @@ let countdownValue = 5,
 let attemptCount = 0;
 let currentAudio = null;
 let btnApply = document.getElementById("btnApply");
-let urlModel ="";
-let className1, className2, className3, classNameTest = ""
+let urlModel = "";
+let className1,
+  className2,
+  className3,
+  classNameTest = "";
 let nguong = 0;
 let currentVideo = null;
 
+// Map lưu file của người dùng: { "Tên lớp" : blobURL }
+let fileMap = {};
 
-const domID = (id)=>{
+const domID = (id) => {
   return document.getElementById(id);
-}
+};
 
 async function initModel() {
   if (!model) {
-    const modelURL = URL + "model.json";
-    const metadataURL = URL + "metadata.json";
+    const modelURL = MODEL_URL + "model.json";
+    const metadataURL = MODEL_URL + "metadata.json";
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
 
@@ -36,29 +42,36 @@ async function initModel() {
   }
 }
 btnApply.addEventListener("click", function () {
-   urlModel = document.getElementById("inputURLModel").value;
-   className1 = document.getElementById("className1").value
-   className2 = document.getElementById("className2").value
-   className3 = document.getElementById("className3").value
-   classNameTest = document.getElementById("classNameTest").value
-   nguong = document.getElementById("nguong").value*1;
+  urlModel = document.getElementById("inputURLModel").value;
+  className1 = document.getElementById("className1").value;
+  className2 = document.getElementById("className2").value;
+  className3 = document.getElementById("className3").value;
+  classNameTest = document.getElementById("classNameTest").value;
+  nguong = document.getElementById("nguong").value * 1;
 
+  domID("labelClass1").innerHTML = className1;
+  domID("labelClass2").innerHTML = className2;
+  domID("labelClass3").innerHTML = className3;
+  domID("labelClassTest").innerHTML = classNameTest;
+  MODEL_URL = urlModel
 
-   domID("labelClass1").innerHTML = className1
-   domID("labelClass2").innerHTML = className2
-   domID("labelClass3").innerHTML = className3
-   domID("labelClassTest").innerHTML = classNameTest
-    
-   console.log(urlModel);
-   console.log(className1);
-   console.log(className2);
-   console.log(className3);
-   console.log(classNameTest);
-   console.log(nguong);
-   
-   
-  
-})
+  // Lấy file và tạo blobURL
+  const f1 = domID("fileClass1").files[0];
+  const f2 = domID("fileClass2").files[0];
+  const f3 = domID("fileClass3").files[0];
+  const fTest = domID("fileClassTest").files[0];
+
+  if (f1) fileMap[className1] = { url: URL.createObjectURL(f1), type: f1.type };
+  if (f2) fileMap[className2] = { url: URL.createObjectURL(f2), type: f2.type };
+  if (f3) fileMap[className3] = { url: URL.createObjectURL(f3), type: f3.type };
+  if (fTest)
+    fileMap[classNameTest] = {
+      url: URL.createObjectURL(fTest),
+      type: fTest.type,
+    };
+
+  console.log("File map:", fileMap);
+});
 
 // function playVideo(file) {
 //   // Nếu đang phát video khác thì dừng lại
@@ -104,9 +117,11 @@ function playVideoFullscreen(file) {
   // Phát toàn màn hình
   if (currentVideo.requestFullscreen) {
     currentVideo.requestFullscreen();
-  } else if (currentVideo.webkitRequestFullscreen) { // Safari
+  } else if (currentVideo.webkitRequestFullscreen) {
+    // Safari
     currentVideo.webkitRequestFullscreen();
-  } else if (currentVideo.msRequestFullscreen) { // IE/Edge
+  } else if (currentVideo.msRequestFullscreen) {
+    // IE/Edge
     currentVideo.msRequestFullscreen();
   }
 
@@ -164,7 +179,6 @@ async function updateProgressBars() {
     prediction[1].probability * 100 + "%";
   document.getElementById("bar3").style.width =
     prediction[2].probability * 100 + "%";
-  
 }
 
 async function predict(attemptNumber) {
@@ -212,19 +226,30 @@ async function predict(attemptNumber) {
   //   }
   // }
 
-  if (highestProb > 0.8) {
-  if (highestClass === "1") {
-    document.body.style.backgroundColor = "red";
-    // playVideo("video1.mp4");
-  } else if (highestClass === "2") {
-    document.body.style.backgroundColor = "blue";
-    // playVideo("video2.mp4");
-  } else if (highestClass === "3") {
-    document.body.style.backgroundColor = "yellow";
-    playVideoFullscreen("meme10diem.mp4");
-  }
-}
+  //ok
+  // if (highestProb > 0.8) {
+  //   if (highestClass === "1") {
+  //     document.body.style.backgroundColor = "red";
+  //     // playVideo("video1.mp4");
+  //   } else if (highestClass === "2") {
+  //     document.body.style.backgroundColor = "blue";
+  //     // playVideo("video2.mp4");
+  //   } else if (highestClass === "3") {
+  //     document.body.style.backgroundColor = "yellow";
+  //     playVideoFullscreen("meme10diem.mp4");
+  //   }
+  // }
 
+  // Nếu vượt ngưỡng thì phát file mà người dùng đã chọn
+  if (highestProb > nguong && fileMap[highestClass]) {
+    const file = fileMap[highestClass];
+    if (file.type.startsWith("video/")) {
+      playVideoFullscreen(file.url);
+    } else if (file.type.startsWith("audio/")) {
+      playSound(file.url);
+    }
+  }
+  
 }
 
 function playSound(file) {
