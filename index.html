@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Ho My Han - Teachable Machine</title>
 
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
@@ -25,7 +25,7 @@
           <div class="hr"></div>
           <div class="nguong item">
             <label for=""> Ngưỡng tự tin (0–1):</label>
-            <input type="number" id="nguong"/>
+            <input type="number" id="nguong" />
           </div>
           <div class="hr"></div>
           <div class="classAndSound item">
@@ -36,55 +36,97 @@
             <div class="row">
               <div class="className">
                 <label for="">Lớp 1</label>
-                <input type="text" id="className1" placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"/>
+                <input
+                  type="text"
+                  id="className1"
+                  placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"
+                />
               </div>
               <div class="sound">
-                <input type="file" name="" id="fileClass1" accept="audio/*,video/*" />
+                <input
+                  type="file"
+                  name=""
+                  id="fileClass1"
+                  accept="audio/*,video/*"
+                />
               </div>
             </div>
             <div class="row">
               <div class="className">
                 <label for="">Lớp 2</label>
-                <input type="text" id="className2" placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"/>
+                <input
+                  type="text"
+                  id="className2"
+                  placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"
+                />
               </div>
               <div class="sound">
-                <input type="file" name="" id="fileClass2" accept="audio/*,video/*" />
+                <input
+                  type="file"
+                  name=""
+                  id="fileClass2"
+                  accept="audio/*,video/*"
+                />
               </div>
             </div>
             <div class="row">
               <div class="className">
                 <label for="">Lớp 3</label>
-                <input type="text" id="className3" placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"/>
+                <input
+                  type="text"
+                  id="className3"
+                  placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"
+                />
               </div>
               <div class="sound">
-                <input type="file" name="" id="fileClass3" accept="audio/*,video/*" />
+                <input
+                  type="file"
+                  name=""
+                  id="fileClass3"
+                  accept="audio/*,video/*"
+                />
               </div>
             </div>
             <div class="row">
               <div class="className">
                 <label for="">Lớp test</label>
-                <input type="text" id="classNameTest" placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"/>
+                <input
+                  type="text"
+                  id="classNameTest"
+                  placeholder="Tên lớp trùng với lớp của model đã được train trên Teachable Machine"
+                />
               </div>
               <div class="sound">
-                <input type="file" name="" id="fileClassTest" accept="audio/*,video/*" />
+                <input
+                  type="file"
+                  name=""
+                  id="fileClassTest"
+                  accept="audio/*,video/*"
+                />
               </div>
             </div>
-            
           </div>
           <br />
           <div class="actionBtn">
             <button class="btn btnApply" id="btnApply">Apply</button>
-            <button class="btn btnStart" onclick="startPrediction()">Start</button>
+            <button class="btn btnStart" onclick="startPrediction()">
+              Start
+            </button>
           </div>
         </div>
         <div class="right item">
           <div class="top">
             <div class="timer">
-              <h4>Timer</h4>
-              <div
-                id="countdown"
-                style="font-size: 24px; margin-top: 10px; color: green"
-              ></div>
+              <div class="timeLabel">
+                <h4>Timer</h4>
+                <div
+                  id="countdown"
+                  style="font-size: 24px; margin-top: 10px; color: green"
+                ></div>
+              </div>
+              <div class="chiSo">
+                <div id="label-container"></div>
+              </div>
             </div>
           </div>
           <div class="hr"></div>
@@ -113,13 +155,10 @@
               </div>
             </div>
           </div>
-
-          <div class="hr"></div>
-
           <div class="hr"></div>
           <div class="history">
             <h4>Lịch sử:</h4>
-            <div id="label-container"></div>
+
             <div id="history" style="margin-top: 10px"></div>
           </div>
         </div>
