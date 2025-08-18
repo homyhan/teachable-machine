@@ -89,6 +89,9 @@ body{
 .orange {
   background: orange;
 }
+.puple{
+    background: purple;
+}
 .history{
     overflow-y: scroll;
     height: 300px;

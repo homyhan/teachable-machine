@@ -1,6 +1,6 @@
 // const URL = "https://teachablemachine.withgoogle.com/models/rdcqB69I8/";
 // const MODEL_URL = "https://teachablemachine.withgoogle.com/models/Rn6MVZ6kF/"; // tay 207
-let MODEL_URL = ""
+let MODEL_URL = "";
 let model, webcam, labelContainer, maxPredictions;
 let countdownValue = 5,
   countdownInterval,
@@ -53,25 +53,68 @@ btnApply.addEventListener("click", function () {
   domID("labelClass2").innerHTML = className2;
   domID("labelClass3").innerHTML = className3;
   domID("labelClassTest").innerHTML = classNameTest;
-  MODEL_URL = urlModel
+  MODEL_URL = urlModel;
 
   // Lấy file và tạo blobURL
-  const f1 = domID("fileClass1").files[0];
-  const f2 = domID("fileClass2").files[0];
-  const f3 = domID("fileClass3").files[0];
-  const fTest = domID("fileClassTest").files[0];
+  // const f1 = domID("fileClass1").files[0];
+  // const f2 = domID("fileClass2").files[0];
+  // const f3 = domID("fileClass3").files[0];
+  // const fTest = domID("fileClassTest").files[0];
 
-  if (f1) fileMap[className1] = { url: URL.createObjectURL(f1), type: f1.type };
-  if (f2) fileMap[className2] = { url: URL.createObjectURL(f2), type: f2.type };
-  if (f3) fileMap[className3] = { url: URL.createObjectURL(f3), type: f3.type };
-  if (fTest)
-    fileMap[classNameTest] = {
-      url: URL.createObjectURL(fTest),
-      type: fTest.type,
-    };
+  // if (f1) fileMap[className1] = { url: URL.createObjectURL(f1), type: f1.type };
+  // if (f2) fileMap[className2] = { url: URL.createObjectURL(f2), type: f2.type };
+  // if (f3) fileMap[className3] = { url: URL.createObjectURL(f3), type: f3.type };
+  // if (fTest)
+  //   fileMap[classNameTest] = {
+  //     url: URL.createObjectURL(fTest),
+  //     type: fTest.type,
+  //   };
+
+  // console.log("File map:", fileMap);
+
+  // Lấy link YouTube
+  const u1 = domID("urlClass1").value;
+  const u2 = domID("urlClass2").value;
+  const u3 = domID("urlClass3").value;
+  const uTest = domID("urlClassTest").value;
+
+  if (u1) fileMap[className1] = { url: u1, type: "youtube" };
+  if (u2) fileMap[className2] = { url: u2, type: "youtube" };
+  if (u3) fileMap[className3] = { url: u3, type: "youtube" };
+  if (uTest) fileMap[classNameTest] = { url: uTest, type: "youtube" };
 
   console.log("File map:", fileMap);
 });
+
+function playYouTube(url) {
+  // Nếu đang phát thì xóa
+  if (currentVideo) {
+    currentVideo.remove();
+    currentVideo = null;
+  }
+
+  // Lấy videoId từ URL
+  let videoId = "";
+  const match = url.match(/(?:youtube\.com.*v=|youtu\.be\/)([^&]+)/);
+  if (match && match[1]) {
+    videoId = match[1];
+  } else {
+    alert("URL YouTube không hợp lệ!");
+    return;
+  }
+
+  // Tạo iframe
+  currentVideo = document.createElement("iframe");
+  currentVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1`;
+  currentVideo.style.position = "fixed";
+  currentVideo.style.top = "0";
+  currentVideo.style.left = "0";
+  currentVideo.style.width = "100%";
+  currentVideo.style.height = "100%";
+  currentVideo.style.zIndex = "9999";
+  currentVideo.allow = "autoplay; fullscreen";
+  document.body.appendChild(currentVideo);
+}
 
 // function playVideo(file) {
 //   // Nếu đang phát video khác thì dừng lại
@@ -179,6 +222,8 @@ async function updateProgressBars() {
     prediction[1].probability * 100 + "%";
   document.getElementById("bar3").style.width =
     prediction[2].probability * 100 + "%";
+  document.getElementById("bar4").style.width =
+    prediction[3].probability * 100 + "%";
 }
 
 async function predict(attemptNumber) {
@@ -241,15 +286,20 @@ async function predict(attemptNumber) {
   // }
 
   // Nếu vượt ngưỡng thì phát file mà người dùng đã chọn
+  // if (highestProb > nguong && fileMap[highestClass]) {
+  //   const file = fileMap[highestClass];
+  //   if (file.type.startsWith("video/")) {
+  //     playVideoFullscreen(file.url);
+  //   } else if (file.type.startsWith("audio/")) {
+  //     playSound(file.url);
+  //   }
+  // }
+
   if (highestProb > nguong && fileMap[highestClass]) {
     const file = fileMap[highestClass];
-    if (file.type.startsWith("video/")) {
-      playVideoFullscreen(file.url);
-    } else if (file.type.startsWith("audio/")) {
-      playSound(file.url);
-    }
+    playYouTube(file.url);
+    
   }
-  
 }
 
 function playSound(file) {
